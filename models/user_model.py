@@ -11,7 +11,7 @@ class User(Document):
   hash_password: str
   first_name: Optional[str] = None
   last_name: Optional[str] = None
-  disable: Optional[bool] = None
+  disabled: Optional[bool] = None
   
   def __repr__(self) -> str:
     return f"<User {self.email}>" 

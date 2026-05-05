@@ -1,3 +1,4 @@
+import hashlib
 from passlib.context import CryptContext
 
 password_context = CryptContext(
@@ -5,8 +6,13 @@ password_context = CryptContext(
   deprecated="auto"
 )
 
-def get_password(password:str)->str:
-  return password_context.hash(password)
+def _normalize_password(password: str) -> str:
+  return hashlib.sha256(password.encode("utf-8")).hexdigest()
 
-def verify_password(password:str, hashed_password:str)->bool:
-  return password_context.verify(password, hashed_password)
+def get_password(password: str) -> str:
+  normalized = _normalize_password(password)
+  return password_context.hash(normalized)
+
+def verify_password(password: str, hashed_password: str) -> bool:
+  normalized = _normalize_password(password)
+  return password_context.verify(normalized, hashed_password)
