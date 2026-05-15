@@ -21,7 +21,7 @@ def verify_password(password: str, hashed_password: str) -> bool:
   normalized = _normalize_password(password)
   return password_context.verify(normalized, hashed_password)
 
-def create_acess_token(subject:Union[str, Any], expires_delta:int=None)->str:
+def create_access_token(subject:Union[str, Any], expires_delta:int=None)->str:
   if expires_delta is not None:
     expires_delta = datetime.now(timezone.utc) + expires_delta
   else:
