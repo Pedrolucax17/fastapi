@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends
 from models.user_model import User
 from models.todo_model import Todo
 from services.todo_service import TodoService
-from schemas.todo_schema import TodoDetail, TodoCreate
+from schemas.todo_schema import TodoDetail, TodoCreate, TodoUpdate
 from api.dependencies.user_deps import get_current_user
 
 todo_router = APIRouter()
@@ -21,3 +21,12 @@ async def create_todo(data: TodoCreate, current_user:User = Depends(get_current_
 @todo_router.get("/{todo_id}", summary="Detalhe de nota por id", response_model=TodoDetail)
 async def detail(todo_id: UUID, current_user:User = Depends(get_current_user)):
     return await TodoService.detail(current_user, todo_id)
+
+@todo_router.put('/{todo_id}', summary='Atualiza Nota', response_model=TodoDetail)
+async def update(todo_id: UUID, data: TodoUpdate, current_user: User = Depends(get_current_user)):
+    return await TodoService.update_todo(current_user, todo_id, data)
+
+@todo_router.delete('/{todo_id}', summary='Exclui nota')
+async def delete(todo_id: UUID, current_user: User = Depends(get_current_user)):
+    await TodoService.delete_todo(current_user, todo_id)
+    return None

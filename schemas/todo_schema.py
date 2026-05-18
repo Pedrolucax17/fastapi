@@ -9,8 +9,8 @@ class TodoCreate(BaseModel):
 	status:Optional[bool] = False
 
 class TodoUpdate(BaseModel):
-	title:Optional[str]
-	description:Optional[str]
+	title:Optional[str] = None
+	description:Optional[str] = None
 	status:Optional[bool] = False
 
 class TodoDetail(BaseModel):
